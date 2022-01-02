@@ -4,15 +4,12 @@
   "description": "",
   "main": "index.js",
   "private": true,
-  "workspaces": ["packages/*"],
+  "workspaces": ["core/*","commands/*","models/*","utils/*"],
   "scripts": {
     "test": "lerna run test",
     "new-version": "lerna version --conventional-commits --yes",
     "diff": "lerna diff"
   },
   "author": "",
-  "license": "ISC",
-  "devDependencies": {
-    "lerna": "^4.0.0"
-  }
+  "license": "ISC"
 }
