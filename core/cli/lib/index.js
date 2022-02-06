@@ -7,11 +7,14 @@ let homedir, rootCheck, pathExists, args, config;
 const path = require('path');
 const semver = require('semver');
 const colors = require('colors/safe');
+const commander = require('commander');
 
 const log = require('@mylerna/log');
 
 const pkg = require('../package.json');
 const constant = require('./const');
+
+const program = new commander.Command();
 
 async function core() {
     try{
@@ -23,15 +26,46 @@ async function core() {
         checkNodeVersion();
         checkRoot();
         checkUserHome();
-        checkInputArgs();
+        // checkInputArgs();
         checkEnv();
         await checkGlobalUpdate();
+        registerCommand();
     } catch(e){
         log.error(e.message);
     }
 }
 
-function registerCommand() {}
+function registerCommand() {
+    program
+        .name(Object.keys(pkg.bin)[0])
+        .usage('<command> [options]')
+        .version(pkg.version)
+        .option('-d, --debug', 'open debug mode', false);
+
+    program.on('option:debug', function() {
+        if(program._optionValues.debug){
+            process.env.LOG_LEVEL = 'verbose';
+        } else {
+            process.env.LOG_LEVEL = 'info';
+        }
+        log.level = process.env.LOG_LEVEL;
+    });
+
+    program.on('command:*', function(obj) {
+        const availableCommands = program.commands.map(cmd => cmd.name());
+        console.log(colors.red(`unknown command: ${obj[0]}`));
+        if(availableCommands.length > 0){
+            console.log(colors.green(`available commands: ${availableCommands.join(',')}`));
+        }
+    });
+
+    program.parse(process.argv);
+
+    if(program.args && program.args.length < 1){
+        program.outputHelp();
+        console.log();
+    }
+}
 
 async function checkGlobalUpdate() {
     const currentVersion = pkg.version;

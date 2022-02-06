@@ -27,9 +27,10 @@
     "url": "https://github.com/hohhots/mylerna/issues"
   },
   "dependencies": {
-    "@mylerna/log": "^1.0.2",
     "@mylerna/get-npm-info": "^1.0.2",
+    "@mylerna/log": "^1.0.2",
     "colors": "^1.4.0",
+    "commander": "^9.0.0",
     "dotenv": "^10.0.0",
     "minimist": "^1.2.5",
     "path-exists": "^5.0.0",

@@ -4,7 +4,12 @@
   "description": "",
   "main": "index.js",
   "private": true,
-  "workspaces": ["core/*","commands/*","models/*","utils/*"],
+  "workspaces": [
+    "core/*",
+    "commands/*",
+    "models/*",
+    "utils/*"
+  ],
   "scripts": {
     "test": "lerna run test",
     "new-version": "lerna version --conventional-commits --yes",
