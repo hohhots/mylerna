@@ -2,16 +2,15 @@
 
 module.exports = core;
 
-let homedir;
-let rootCheck;
-let pathExists;
-let args;
+let homedir, rootCheck, pathExists, args, config;
 
+const path = require('path');
 const semver = require('semver');
 const colors = require('colors/safe');
 
-const pkg = require('../package.json');
 const log = require('@mylerna/log');
+
+const pkg = require('../package.json');
 const constant = require('./const');
 
 async function core() {
@@ -25,9 +24,50 @@ async function core() {
         checkRoot();
         checkUserHome();
         checkInputArgs();
+        checkEnv();
+        await checkGlobalUpdate();
     } catch(e){
         log.error(e.message);
     }
+}
+
+function registerCommand() {}
+
+async function checkGlobalUpdate() {
+    const currentVersion = pkg.version;
+    const npmName = 'dotenv'; //pkg.name;
+    
+    const {getSemverVersion} = require('@mylerna/get-npm-info');
+    const lastVersion = await getSemverVersion(currentVersion, npmName);
+    if(lastVersion && semver.gt(lastVersion, currentVersion)){
+        log.warn(colors.yellow(`Please upgrade npm package ${npmName}. 
+        Current version : ${currentVersion}, 
+        last version : ${lastVersion}.`));
+    }
+}
+
+function checkEnv() {
+    const dotenpath = path.resolve(homedir, '.env');
+    if(pathExists(dotenpath)){
+        require('dotenv').config({
+            path: dotenpath
+        });
+    }
+    config = createDefaultConfig();
+    log.verbose(process.env.CLI_HOME_PATH);
+}
+
+function createDefaultConfig() {
+    let config = {
+        home: homedir
+    };
+    if(process.env.CLI_HOME){
+        config['cliHome'] = path.join(homedir, process.env.CLI_HOME)
+    } else {
+        config['cliHome'] = path.join(homedir, constant.DEFAULT_CLI_HOME)
+    }
+    process.env.CLI_HOME_PATH = config.cliHome;
+    return config;
 }
 
 function checkInputArgs() {
@@ -63,5 +103,5 @@ function checkNodeVersion() {
 }
 
 function checkPkgVersion() {
-    console.log(pkg.version);
+    log.info('cli', pkg.version);
 }
