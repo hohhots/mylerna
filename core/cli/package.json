@@ -29,6 +29,7 @@
   "dependencies": {
     "@mylerna/get-npm-info": "^1.0.2",
     "@mylerna/log": "^1.0.2",
+    "@mylerna/init": "^1.0.0",
     "colors": "^1.4.0",
     "commander": "^9.0.0",
     "dotenv": "^10.0.0",

@@ -10,6 +10,7 @@ const colors = require('colors/safe');
 const commander = require('commander');
 
 const log = require('@mylerna/log');
+const init = require('@mylerna/init');
 
 const pkg = require('../package.json');
 const constant = require('./const');
@@ -41,6 +42,11 @@ function registerCommand() {
         .usage('<command> [options]')
         .version(pkg.version)
         .option('-d, --debug', 'open debug mode', false);
+
+    program
+        .command('init [projectName]')
+        .option('-f, --force', 'Force to init project')
+        .action(init);
 
     program.on('option:debug', function() {
         if(program._optionValues.debug){
