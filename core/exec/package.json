@@ -1,6 +1,6 @@
 {
-  "name": "@mylerna/init",
-  "version": "1.0.0",
+  "name": "@mylerna/exec",
+  "version": "1.0.2",
   "description": "> TODO: description",
   "author": "b rgd <hohhots@qq.com>",
   "homepage": "https://github.com/hohhots/mylerna#readme",
@@ -27,6 +27,7 @@
     "url": "https://github.com/hohhots/mylerna/issues"
   },
   "dependencies": {
-    "@mylerna/command": "^1.0.2"
+    "@mylerna/package": "^1.0.2",
+    "@mylerna/log": "^1.0.2"
   }
 }

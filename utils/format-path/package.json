@@ -1,6 +1,6 @@
 {
-  "name": "@mylerna/init",
-  "version": "1.0.0",
+  "name": "@mylerna/format-path",
+  "version": "1.0.2",
   "description": "> TODO: description",
   "author": "b rgd <hohhots@qq.com>",
   "homepage": "https://github.com/hohhots/mylerna#readme",
@@ -25,8 +25,5 @@
   },
   "bugs": {
     "url": "https://github.com/hohhots/mylerna/issues"
-  },
-  "dependencies": {
-    "@mylerna/command": "^1.0.2"
   }
 }
